@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models');
-const JobExecution = db.jobsExecutions;
+const JobExecution = db.JobExecution;
 
 // Create a new Job Execution
 router.post('/', async (req, res) => {

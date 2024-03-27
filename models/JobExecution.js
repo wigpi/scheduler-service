@@ -7,14 +7,14 @@ function initJobExecution(sequelize) {
     JobExecution.init({
         execution_id: {
             type: DataTypes.UUID,
-            defaultValue: Sequelize.UUIDV4,
+            defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
         job_id: {
             type: DataTypes.UUID,
             allowNull: false,
             references: {
-                model: 'jobs',
+                model: 'Job',
                 key: 'job_id',
             },
         },
@@ -39,10 +39,10 @@ function initJobExecution(sequelize) {
         sequelize,
         modelName: 'JobExecution',
         tableName: 'jobs_executions',
-        createdAt: false,
+        createdAt: 'executed_at',
         updatedAt: false,
     });
     return JobExecution;
 }
 
-module.exports = { initJobExecution };
+module.exports = initJobExecution;
