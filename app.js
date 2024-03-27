@@ -1,5 +1,7 @@
 const express = require('express');
 const db = require('./models');
+const scheduler = require('./services/scheduler');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,5 +14,8 @@ db.sequelize.sync().then(() => {
   app.use('/jobs', jobRoutes);
   app.use('/job-executions', jobExecutionRoutes);
 
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  app.listen(PORT, async () => {
+    console.log(`Server running on port ${PORT}`)
+    await scheduler.loadAndScheduleJobs();
+  });
 });
