@@ -4,7 +4,6 @@ class Job extends Model {}
 
 function initJob(sequelize) {
   Job.init({
-    // Model attributes
     job_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
