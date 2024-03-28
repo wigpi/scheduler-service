@@ -4,40 +4,14 @@ The Scheduler Service is a containerized REST API designed to manage and schedul
 
 ## How It Works
 
-The service provides endpoints for creating, reading, updating, and deleting scheduled jobs. Each job can be configured with a specific HTTP method, URL, headers, payload, and a CRON-like schedule. The service uses a Node.js environment with Express for routing and Sequelize as the ORM for database interactions, supporting both SQL and NoSQL databases.
+The service provides endpoints for creating, reading, updating, and deleting scheduled jobs. Each job can be configured with a specific HTTP method, URL, headers, payload, and a CRON-like schedule. The service uses a Node.js environment with Express for routing and Sequelize as the ORM for database interactions using PostgreSQL.
+
+When a job is scheduled, the service uses the `node-cron` library to execute the job at the specified interval. The job's outcome is logged in the database, including the HTTP response status code, response body, and any errors that occurred during execution.
 
 ## Usage
 
-### Creating a Job
-
-To create a new job, send a POST request to `/jobs` with a JSON body specifying the job details, including the `name`, `description`, `http_method`, `url`, `headers`, `payload`, `active`, and `schedule` fields.
-
-Example request body:
-
-```json
-{
-  "name": "Example Job",
-  "description": "Fetches data from example.com",
-  "http_method": "GET",
-  "url": "https://www.example.com",
-  "headers": "{}",
-  "payload": "",
-  "active": true,
-  "schedule": "* * * * *"
-}
-```
-
-### Viewing Jobs
-
-To retrieve all scheduled jobs, send a GET request to /jobs.
-
-### Updating a Job
-
-To update an existing job, send a PUT request to /jobs/:id with the updated job details in the JSON body.
-
-### Deleting a Job
-
-To delete a job, send a DELETE request to /jobs/:id.
+<!-- Go checkout the swagger available at /swagger -->
+You can check the swagger documentation at [Swagger](http://localhost:3000/swagger) to see all the available endpoints and their respective parameters.
 
 ## Running the Service
 

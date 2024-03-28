@@ -1,0 +1,299 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Scheduler Service API",
+    "version": "1.0.0",
+    "description": "API for managing jobs and their executions."
+  },
+  "host": "localhost:3000",
+  "schemes": [
+    "http"
+  ],
+  "basePath": "/",
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+	"application/json"
+  ],
+  "paths": {
+    "/jobs": {
+      "post": {
+        "summary": "Create a job",
+        "description": "Creates a new job with the given details.",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "job",
+            "description": "Job to create",
+            "schema": {
+              "$ref": "#/definitions/Job"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Job created"
+          }
+        },
+		"tags": [
+		  "Jobs"
+		]
+      },
+      "get": {
+        "summary": "Get all jobs",
+        "description": "Retrieves a list of all jobs.",
+        "responses": {
+          "200": {
+            "description": "A list of jobs",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Job"
+              }
+            }
+          }
+        },
+		"tags": [
+		  "Jobs"
+		]
+      }
+    },
+    "/jobs/{jobId}": {
+      "get": {
+        "summary": "Get a job by ID",
+        "description": "Retrieves a specific job by its ID.",
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A job object",
+            "schema": {
+              "$ref": "#/definitions/Job"
+            }
+          },
+          "404": {
+            "description": "Job not found"
+          }
+        },
+		"tags": [
+		  "Jobs"
+		]
+      },
+      "put": {
+        "summary": "Update job",
+        "description": "Updates an existing job.",
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "job",
+            "description": "Job data to update",
+            "schema": {
+              "$ref": "#/definitions/Job"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job updated"
+          }
+        },
+		"tags": [
+		  "Jobs"
+		]
+      },
+      "delete": {
+        "summary": "Delete job",
+        "description": "Deletes a job by its ID.",
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job deleted"
+          },
+          "404": {
+            "description": "Job not found"
+          }
+        },
+		"tags": [
+		  "Jobs"
+		]
+      }
+    },
+    "/job-executions": {
+      "get": {
+        "summary": "Get all job executions",
+        "description": "Retrieves a list of all job executions.",
+        "responses": {
+          "200": {
+            "description": "A list of job executions",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/JobExecution"
+              }
+            }
+          }
+        },
+		"tags": [
+			"Job Executions"
+		]
+      }
+    },
+    "/jobs-executions/job/{jobId}": {
+      "get": {
+        "summary": "Get all job executions of a specific job",
+        "description": "Retrieves all executions for a specific job by its ID.",
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of job executions for the specified job",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/JobExecution"
+              }
+            }
+          },
+          "404": {
+            "description": "Job not found"
+          }
+        },
+		"tags": [
+			"Job Executions"
+		]
+      }
+    },
+    "/job-executions/{executionId}": {
+      "get": {
+        "summary": "Get a specific job execution by ID",
+        "description": "Retrieves details of a specific job execution by its ID.",
+        "parameters": [
+          {
+            "name": "executionId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job execution details",
+            "schema": {
+              "$ref": "#/definitions/JobExecution"
+            }
+          },
+          "404": {
+            "description": "Job execution not found"
+          }
+        },
+		"tags": [
+			"Job Executions"
+		]
+      }
+    }
+  },
+  "definitions": {
+    "Job": {
+      "type": "object",
+      "required": [
+        "name",
+        "http_method",
+        "url",
+        "schedule"
+      ],
+      "properties": {
+        "job_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "http_method": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "headers": {
+          "type": "string"
+        },
+        "payload": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "schedule": {
+          "type": "string"
+        },
+        "next_run_time": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "JobExecution": {
+      "type": "object",
+      "properties": {
+        "execution_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "job_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "executed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "response_status": {
+          "type": "integer"
+        },
+        "response_body": {
+          "type": "string"
+        },
+        "error_message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
