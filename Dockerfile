@@ -1,5 +1,5 @@
 # Use the official Node.js 20 image as a parent image
-FROM node:20-slim
+FROM node:20-alpine
 LABEL org.opencontainers.image.description "A simple Node.js web server for scheduling http tasks"
 # Set the working directory
 WORKDIR /app
