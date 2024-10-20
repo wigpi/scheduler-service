@@ -11,7 +11,7 @@ When a job is scheduled, the service uses the `node-cron` library to execute the
 ## Usage
 
 <!-- Go checkout the swagger available at /swagger -->
-You can check the swagger documentation at [Swagger](http://localhost:3000/swagger) to see all the available endpoints and their respective parameters.
+You can check the swagger documentation at [Swagger](http://localhost:3000/api/documentation) to see all the available endpoints and their respective parameters.
 
 ## Running the Service
 
@@ -29,6 +29,7 @@ Ensure you've configured the necessary environment variables for database connec
 - DATABASE_URL: The connection string for the PostgreSQL database.
 - PORT: The port on which the service will listen for incoming requests.
 - ADMIN_KEY: The API key used for authenticating requests to the service.
+- ENV: The environment in which the service is running (dev, prod).
 
 ## Authentication
 
