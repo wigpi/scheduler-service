@@ -26,12 +26,10 @@ Ensure you've configured the necessary environment variables for database connec
 
 ## Environment Variables
 
-- DB_HOST - The hostname of your database server.
-- DB_USER - The database user.
-- DB_PASS - The password for the database user.
-- DB_NAME - The name of the database to connect to.
-- DB_PORT - The port on which your database is running.
+- DATABASE_URL: The connection string for the PostgreSQL database.
+- PORT: The port on which the service will listen for incoming requests.
+- ADMIN_KEY: The API key used for authenticating requests to the service.
 
 ## Authentication
 
-The service uses simple API key authentication for secure communication with other microservices. Include your API key in the `Authorization` header of each request.
+The service uses simple Admin key authentication for secure communication with other microservices. Include your Admin Key in the `admin_key` query param of each request.

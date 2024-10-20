@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Job {
+  job_id        String    @id @default(uuid()) @db.Uuid
+  name          String
+  description   String?
+  http_method   String
+  url           String
+  headers       String? // Assuming this is a JSON string, we can keep it as String in Prisma
+  payload       String? // Assuming this is a JSON string, same as above
+  active        Boolean   @default(true)
+  schedule      String
+  next_run_time DateTime?
+  created_at    DateTime  @default(now()) @map("created_at")
+  updated_at    DateTime  @updatedAt @map("updated_at")
+
+  executions JobExecution[]
+
+  @@map("jobs")
+}
+
+model JobExecution {
+  execution_id    String   @id @default(uuid()) @db.Uuid
+  job_id          String   @db.Uuid
+  executed_at     DateTime @default(now()) @map("executed_at")
+  success         Boolean
+  response_status Int?
+  response_body   String? // Keeping this as String since it is JSON
+  error_message   String?
+
+  job Job @relation(fields: [job_id], references: [job_id])
+
+  @@map("jobs_executions")
+}

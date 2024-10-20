@@ -13,6 +13,9 @@ RUN npm install
 # Copy the rest of your app's source code from your host to your image filesystem.
 COPY . .
 
+# Init prisma
+RUN npx prisma generate
+
 # Tell Docker about the port we'll run on.
 EXPOSE 3000
 
