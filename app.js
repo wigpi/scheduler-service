@@ -3,6 +3,7 @@ const db = require('./models');
 const scheduler = require('./services/scheduler');
 
 const swaggerUi = require('swagger-ui-express');
+const env = process.env.ENV || 'dev';
 const swaggerDocument = require('./swagger.json');
 const app = express();
 const PORT = process.env.PORT || 3000;
