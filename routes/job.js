@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const prisma = require('../models');
-const scheduler = require('../services/SchedulerService'); // Import scheduler service
+const scheduler = require('../services/scheduler'); // Import scheduler service
 const adminKeyCheck = require('../middlewares/adminKeyCheck'); // Import the middleware
 
 // Apply the adminKeyCheck middleware to all routes
