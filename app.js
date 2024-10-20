@@ -18,8 +18,8 @@ if (env === 'dev') {
     swaggerDocument.host = `localhost:${port}`;
     swaggerDocument.schemes = ['http'];
 } else if (env === 'prod') {
-    swaggerDocument.host = PROD_URL.split(':')[1];
-    swaggerDocument.schemes = [PROD_URL.split(':')[0]];
+    swaggerDocument.host = PROD_URL.split('://')[1];
+    swaggerDocument.schemes = [PROD_URL.split('://')[0]];
 }
 
 app.use('/api/jobs', jobRoutes);
