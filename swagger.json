@@ -154,7 +154,7 @@
         ]
       }
     },
-    "/job-executions": {
+    "/jobs-executions": {
       "get": {
         "summary": "Get all job executions",
         "description": "Retrieves a list of all job executions.",
@@ -205,7 +205,7 @@
         ]
       }
     },
-    "/job-executions/{executionId}": {
+    "/jobs-executions/{executionId}": {
       "get": {
         "summary": "Get a specific job execution by ID",
         "description": "Retrieves details of a specific job execution by its ID.",
