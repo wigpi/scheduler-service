@@ -43,7 +43,7 @@
             "name": "job",
             "description": "Job to create",
             "schema": {
-              "$ref": "#/definitions/Job"
+              "$ref": "#/definitions/JobCreate"
             }
           }
         ],
@@ -65,7 +65,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Job"
+                "$ref": "#/definitions/JobRetrieve"
               }
             }
           }
@@ -91,7 +91,7 @@
           "200": {
             "description": "A job object",
             "schema": {
-              "$ref": "#/definitions/Job"
+              "$ref": "#/definitions/JobRetrieve"
             }
           },
           "404": {
@@ -117,7 +117,7 @@
             "name": "job",
             "description": "Job data to update",
             "schema": {
-              "$ref": "#/definitions/Job"
+              "$ref": "#/definitions/JobCreate"
             }
           }
         ],
@@ -235,7 +235,43 @@
     }
   },
   "definitions": {
-    "Job": {
+    "JobCreate": {
+      "type": "object",
+      "required": [
+        "name",
+        "http_method",
+        "url",
+        "schedule"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "http_method": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "headers": {
+          "type": "string"
+        },
+        "payload": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "schedule": {
+          "type": "string"
+        }
+      }
+    },
+    "JobRetrieve": {
       "type": "object",
       "required": [
         "name",
@@ -274,6 +310,14 @@
           "type": "string"
         },
         "next_run_time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
           "type": "string",
           "format": "date-time"
         }
