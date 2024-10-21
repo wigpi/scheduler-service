@@ -16,6 +16,9 @@ COPY . .
 # Init prisma
 RUN npx prisma generate
 
+# Install tzdata for timezone management
+RUN apk add --no-cache tzdata
+
 # Tell Docker about the port we'll run on.
 EXPOSE 3000
 
