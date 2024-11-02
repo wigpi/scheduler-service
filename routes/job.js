@@ -9,6 +9,10 @@ const adminKeyCheck = require('../middlewares/adminKeyCheck'); // Import the mid
 // Apply the adminKeyCheck middleware to all routes
 router.use(adminKeyCheck);
 
+const options = {
+    tz: 'Europe/Paris',
+};
+
 // Create a new Job
 router.post('/', async (req, res) => {
     try {
@@ -21,7 +25,7 @@ router.post('/', async (req, res) => {
             where: { job_id: job.job_id },
             data: { next_run_time: new Date(nextRunTime) },
         });
-        job_to_return = await prisma.job.findUnique({
+        const job_to_return = await prisma.job.findUnique({
             where: { job_id: job.job_id },
         });
         res.status(201).send(job_to_return);
@@ -68,12 +72,13 @@ router.put('/:id', async (req, res) => {
                 where: { job_id: req.params.id },
                 data: req.body,
             });
-            await scheduler.loadAndScheduleJobs();const nextRunTime = parser.parseExpression(job.schedule, options).next().toString();
+            await scheduler.loadAndScheduleJobs();
+            const nextRunTime = parser.parseExpression(updatedJob.schedule, options).next().toString();
             await prisma.job.update({
                 where: { job_id: job.job_id },
                 data: { next_run_time: new Date(nextRunTime) },
             });
-            job_to_return = await prisma.job.findUnique({
+            const job_to_return = await prisma.job.findUnique({
                 where: { job_id: job.job_id },
             });
             res.status(200).send(job_to_return);
