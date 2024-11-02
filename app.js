@@ -27,7 +27,7 @@ app.use('/api/jobs-executions', jobExecutionRoutes);
 app.use('/api/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(PORT, async () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Wigpi Scheduler is listening at ${swaggerDocument.schemes[0]}://${swaggerDocument.host}${swaggerDocument.basePath}`);
     await scheduler.loadAndScheduleJobs();
     scheduler.setupCleanupTask(); // Initialize the cleanup task
 });
