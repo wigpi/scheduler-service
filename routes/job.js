@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const parser = require('cron-parser');
 const prisma = require('../models');
 const scheduler = require('../services/scheduler'); // Import scheduler service
 const adminKeyCheck = require('../middlewares/adminKeyCheck'); // Import the middleware
+
 
 // Apply the adminKeyCheck middleware to all routes
 router.use(adminKeyCheck);
@@ -14,7 +16,15 @@ router.post('/', async (req, res) => {
             data: req.body,
         });
         await scheduler.loadAndScheduleJobs();
-        res.status(201).send(job);
+        const nextRunTime = parser.parseExpression(job.schedule, options).next().toString();
+        await prisma.job.update({
+            where: { job_id: job.job_id },
+            data: { next_run_time: new Date(nextRunTime) },
+        });
+        job_to_return = await prisma.job.findUnique({
+            where: { job_id: job.job_id },
+        });
+        res.status(201).send(job_to_return);
     } catch (error) {
         console.log(error);
         res.status(400).json(error);
@@ -58,8 +68,15 @@ router.put('/:id', async (req, res) => {
                 where: { job_id: req.params.id },
                 data: req.body,
             });
-            await scheduler.loadAndScheduleJobs();
-            res.status(200).send(updatedJob);
+            await scheduler.loadAndScheduleJobs();const nextRunTime = parser.parseExpression(job.schedule, options).next().toString();
+            await prisma.job.update({
+                where: { job_id: job.job_id },
+                data: { next_run_time: new Date(nextRunTime) },
+            });
+            job_to_return = await prisma.job.findUnique({
+                where: { job_id: job.job_id },
+            });
+            res.status(200).send(job_to_return);
         } else {
             res.status(404).send({ message: 'Job not found!' });
         }
